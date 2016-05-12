@@ -4,12 +4,6 @@
 
 --------------------------------------------------------------------------------
 
-## DEATH TO MANUALLY MANAGED STATE
-
-<video src="/home/clement/Images/lol/metal-worker.webm" loop></video>
-
---------------------------------------------------------------------------------
-
 # I'm online!
 
  - [\@clementd](https://twitter.com/clementd) on twitter
@@ -21,13 +15,34 @@
 
 ## Complex frontend UIs
 
+<details>
+  Interactive UIs after page rendering
+</details>
+
+--------------------------------------------------------------------------------
+
+## IHM à client semi-lourd
+
+![](./assets/camembert.jpg)
+
 --------------------------------------------------------------------------------
 
 ## SPAs
 
+<details>
+  First render, then everything happens without page loads
+</details>
+
 --------------------------------------------------------------------------------
 
-# Two-way data binding
+
+![](./assets/jquery.jpg)
+
+--------------------------------------------------------------------------------
+
+## Two-way data binding
+
+--------------------------------------------------------------------------------
 
 <video src="/home/clement/Images/lol/nope.webm" loop></video>
 
@@ -44,6 +59,19 @@
 ## Flux
 
 --------------------------------------------------------------------------------
+
+## <big>Flux</big>
+
+--------------------------------------------------------------------------------
+
+## <big><big>Flux!</big></big>
+
+--------------------------------------------------------------------------------
+
+## <span class="red"><big><big>Flux!</big></big></span>
+
+--------------------------------------------------------------------------------
+
 
 ## You can use React without flux
 
@@ -102,7 +130,7 @@
 --------------------------------------------------------------------------------
 
 ```javascript
-render(e) {
+render() {
   return (
     <button onclick={this.handleClick}>
       Click me
@@ -133,7 +161,10 @@ handleClick(e) {
 
 ```javascript
 render() {
-    return <ChildComponent handlers={this.props.handlers} />
+  return (
+    <ChildComponent
+       handlers={this.props.handlers} />
+  );
 }
 ```
 
@@ -153,7 +184,61 @@ handleClick(e) {
 
 --------------------------------------------------------------------------------
 
+## Redux
+
+<details>
+Simplification, more opinionated version of flux.<br>
+3 base concepts
+</details>
+
+
+--------------------------------------------------------------------------------
+
+## <span class="red">Single</span> source of truth
+
+<details>
+Only one store describing the whole application<br>
+undo / redo
+</details>
+
+--------------------------------------------------------------------------------
+
+## State is <span class="red">read-only</span>
+
+<details>
+No in-place mutation<br>
+No race conditions<br>
+Loggable / inspectable evolutions
+</details>
+
+--------------------------------------------------------------------------------
+
+# Changes are made with <span class="red">pure</span> functions
+
+<details>
+No mutation, only transformations<br>
+More composable
+</details>
+
+--------------------------------------------------------------------------------
+
+![](./assets/redux.jpg)
+
+--------------------------------------------------------------------------------
+
+## Better
+
+<details>
+Easier to model and reason about than flux, but still a bit manual
+</details>
+
+--------------------------------------------------------------------------------
+
 ## Let's try with more suitable tools
+
+<details>
+Tools better suited to modeling evolutions
+</details>
 
 --------------------------------------------------------------------------------
 
@@ -177,15 +262,11 @@ handleClick(e) {
 
 --------------------------------------------------------------------------------
 
-![](./assets/stats-maroilles.png)
-
---------------------------------------------------------------------------------
-
-![](./assets/stats-camembert.png)
-
---------------------------------------------------------------------------------
-
 ## Inversion of Control
+
+<details>
+Describe transformations, let them be called when needed
+</details>
 
 --------------------------------------------------------------------------------
 
@@ -198,6 +279,11 @@ handleClick(e) {
 --------------------------------------------------------------------------------
 
 # Functional Reactive Programming
+
+<details>
+not really (don't tell Conal Elliott)
+observable-based programming?
+</details>
 
 --------------------------------------------------------------------------------
 
@@ -219,13 +305,15 @@ handleClick(e) {
 
 ## Only Observables
 
---------------------------------------------------------------------------------
-
 ![](./assets/zuul.png)
 
 --------------------------------------------------------------------------------
 
 ## Observables
+
+<details>
+event streams
+</details>
 
 --------------------------------------------------------------------------------
 
@@ -239,6 +327,32 @@ handleClick(e) {
 
 ![](./assets/observables.png)
 
+<details>
+lots of combination functions available
+</details>
+
+
+--------------------------------------------------------------------------------
+
+## Redux + observables
+
+--------------------------------------------------------------------------------
+
+## Angular v2
+
+<details>
+Uses observables internally<br>
+exposes observables in some parts of the public API (forms)
+</details>
+
+--------------------------------------------------------------------------------
+
+## We can do better
+
+<details>
+Model all the application with observables
+</details>
+
 --------------------------------------------------------------------------------
 
 ## Cycle.js
@@ -246,6 +360,11 @@ handleClick(e) {
 --------------------------------------------------------------------------------
 
 ![](./assets/cyclejs.png)
+
+<details>
+A UI is a cycle between a user and a computer
+</details>
+
 
 --------------------------------------------------------------------------------
 
@@ -282,12 +401,16 @@ Cycle.run(main, {
 ```javascript
 function intent(DOM) {
   return {
-    changeWeight$
-      DOM.select('#weight').events('input')
-      .map(ev => ev.target.value),
+    changeWeight$:
+      DOM
+        .select('#weight')
+        .events('input')
+        .map(ev => ev.target.value),
     changeHeight$:
-      DOM.select('#height').events('input')
-      .map(ev => ev.target.value)
+      DOM
+        .select('#height')i
+        .events('input')
+        .map(ev => ev.target.value)
   };
 }
 ```
@@ -320,12 +443,13 @@ function model(actions) {
 
 ```javascript
 function view(state$) {
-  return state$.map(({weight, height, bmi}) =>
-    div([
-      renderWeightSlider(weight),
-      renderHeightSlider(height),
-      h2('BMI is ' + bmi)
-    ])
+  return state$
+    .map(({weight, height, bmi}) =>
+      div([
+        renderWeightSlider(weight),
+        renderHeightSlider(height),
+        h2('BMI is ' + bmi)
+      ])
   );
 }
 ```
@@ -340,6 +464,125 @@ function main({DOM}) {
   };
 }
 ```
+
+--------------------------------------------------------------------------------
+
+![](./assets/mvi-unidir-ui-arch.jpg)
+
+--------------------------------------------------------------------------------
+
+## Purity
+
+![](./assets/jack-ripper.jpg)
+
+<details>
+Pure functions everywhere<br>
+Transformations from observables to observables
+</details>
+
+--------------------------------------------------------------------------------
+
+## Drivers
+
+<details>
+Where effects happen<br>
+Effects are described in a pure fashion<br>
+Very easy to mock
+</details>
+
+--------------------------------------------------------------------------------
+
+# Declarative effects
+
+<div>
+```javascript
+  
+  
+  
+  
+const requests$ = Rx.Observable
+ .interval(5000)
+ .map(() => 'http://example.org/')
+```
+</div>
+
+--------------------------------------------------------------------------------
+
+# Easy mocking
+
+<big>
+```javascript
+  
+  
+  
+  
+Cycle.run(main, {
+  DOM:  myDomMock,
+  HTTP: myHttpMock
+});
+```
+</big>
+
+--------------------------------------------------------------------------------
+
+## tl;dl:
+
+--------------------------------------------------------------------------------
+
+# TIMTOWTDI
+
+## <small>[Unidirectional UI architectures](http://staltz.com/unidirectional-user-interface-architectures.html)</small>
+
+<details>
+  RxJS only<br>
+  Flux<br>
+  RxJS + react<br>
+  Redux<br>
+  Elm
+</details>
+
+--------------------------------------------------------------------------------
+
+## Play with Cycle.js
+
+<details>Best way to get a feel of it</details>
+
+--------------------------------------------------------------------------------
+
+## Everything is moving fast
+
+<details>
+  Lots of ideas<br>
+  No clear consensus (yet?)
+</details>
+
+--------------------------------------------------------------------------------
+
+## Cycle diversity
+
+<details>Generalize for any stream library</details>
+
+--------------------------------------------------------------------------------
+
+## xstream
+
+<details>
+  Simpler than RxJS<br>
+  Forget about drivers<br>
+  Hot observables by default
+</details>
+
+--------------------------------------------------------------------------------
+
+## Elm: Farewell to FRP
+
+--------------------------------------------------------------------------------
+
+![](./assets/mvu-unidir-ui-arch.jpg)
+
+--------------------------------------------------------------------------------
+
+## Read list
 
 --------------------------------------------------------------------------------
 
